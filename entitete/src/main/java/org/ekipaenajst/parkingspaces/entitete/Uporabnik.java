@@ -1,4 +1,4 @@
-package org.ekipaenajst.entitete;
+package org.ekipaenajst.parkingspaces.entitete;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,12 +31,8 @@ public class Uporabnik implements Serializable {
     @Column(name = "username")
     private String username;
 
-    @OneToOne
-    @JoinColumn(name = "naslovId")
-    private Naslov naslov;
-
-    @OneToMany(fetch = FetchType.LAZY/*, mappedBy = "uporabnik"*/)
-    private List<Avto> vozila;
+    @Column(name = "password")
+    private String password;
 
     public Uporabnik() {}
 
@@ -85,13 +81,11 @@ public class Uporabnik implements Serializable {
         this.username = username;
     }
 
-    public Naslov getNaslov() {
-        return naslov;
+    public String getPassword() {
+        return password;
     }
 
-    public void setNaslov(Naslov naslov) {
-        this.naslov = naslov;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
-
 }

@@ -1,10 +1,7 @@
-package org.ekipaenajst.beans;
+package org.ekipaenajst.parkingspaces.beans;
 
-import org.ekipaenajst.entitete.Uporabnik;
+import org.ekipaenajst.parkingspaces.entitete.Uporabnik;
 
-import javax.enterprise.context.RequestScoped;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.*;
 import javax.transaction.Transactional;
@@ -15,7 +12,7 @@ import java.util.logging.Logger;
 @ApplicationScoped // probably... mogoče treba spremeniti
 public class UporabnikiZrno {
 
-    @PersistenceContext(unitName = "accounts-jpa")
+    @PersistenceContext(unitName = "external-jpa")
     private EntityManager em;
 
     private Logger log = Logger.getLogger(UporabnikiZrno.class.getName());

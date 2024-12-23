@@ -1,6 +1,7 @@
 package org.ekipaenajst.parkingspaces.beans;
 
 import org.ekipaenajst.parkingspaces.dtos.PredlogDTO;
+import org.ekipaenajst.parkingspaces.entitete.Parkirisce;
 import org.ekipaenajst.parkingspaces.entitete.Predlog;
 import org.ekipaenajst.parkingspaces.entitete.Uporabnik;
 
@@ -56,31 +57,45 @@ public class PredlogiZrno {
         em.remove(p);
     }
 
-    public void createPredlog(Predlog p) {
+    public void createPredlog(Predlog predlog) {
 
-        Predlog obstojecPredlog = this.findByLokacija(p.getLokacija());
+        Predlog obstojecPredlog = this.findByLokacija(predlog.getLokacija());
 
         if (obstojecPredlog == null) {
             obstojecPredlog = new Predlog();
-            obstojecPredlog.setLokacija(p.getLokacija());
-            obstojecPredlog.setIme(p.getIme());
+            obstojecPredlog.setLokacija(predlog.getLokacija());
+            obstojecPredlog.setIme(predlog.getIme());
             obstojecPredlog.setStGlasov(1);
-            obstojecPredlog.setVolilci(p.getVolilci());
+            obstojecPredlog.setVolilci(predlog.getVolilci());
         }
         else {
             List<Uporabnik> volilci = obstojecPredlog.getVolilci();
-            volilci.addAll(p.getVolilci());
-            obstojecPredlog.setStGlasov(obstojecPredlog.getStGlasov() + p.getVolilci().size());
+            volilci.addAll(predlog.getVolilci());
+            obstojecPredlog.setStGlasov(obstojecPredlog.getStGlasov() + predlog.getVolilci().size());
         }
 
 
         em.persist(obstojecPredlog);
 
         if (obstojecPredlog.getStGlasov() >= 10) {
-            // TODO implementiraj komunikacijo z externaldata, da se doda parkirisce
+            Parkirisce parkirisce = new Parkirisce();
+
+            parkirisce.setIme(obstojecPredlog.getIme());
+            parkirisce.setLokacija(obstojecPredlog.getLokacija());
+
+            parkirisce.setCenaDefault(0);
+
+            // ustvarimo parkirisce v storitvi externaldata
+            this.createParkirisce(parkirisce);
+
             this.deletePredlog(obstojecPredlog);
         }
 
+
+    }
+
+    public void createParkirisce(Parkirisce p) {
+        // TODO implementiraj komunikacijo z externaldata, da se doda parkirisce
 
     }
 

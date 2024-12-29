@@ -49,6 +49,7 @@
     </dependencies>
 
     <build>
+        <finalName>parkingspaces-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>com.kumuluz.ee</groupId>

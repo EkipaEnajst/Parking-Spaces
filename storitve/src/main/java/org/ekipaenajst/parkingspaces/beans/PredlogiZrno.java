@@ -16,6 +16,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -38,11 +39,14 @@ public class PredlogiZrno {
 
     @PostConstruct
     private void init() {
+
+        Map<String,String> env = System.getenv();
+
         objectMapper = new ObjectMapper();
 
         httpClient = HttpClient.newBuilder().build();
 
-        externaldataURL = "http://172.17.0.3:8080/v1/parkirisca/"; // TODO ponastavi link do externaldata
+        externaldataURL = env.get("EXTERNALDATAURL");//"http://172.17.0.3:8080/v1/parkirisca/";
     }
 
     public List<Predlog> getPredlogi() {

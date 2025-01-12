@@ -1,7 +1,7 @@
 kumuluzee:
   datasources:
     - jndi-name: jdbc/ExternalDS
-      connection-url: jdbc:postgresql://172.17.0.2:5432/external
+      connection-url: jdbc:postgresql://34.154.10.104:5432/external
       username: postgres
-      password: postgres
+      password: '0y:d\2tysKL2+i"@'
       max-pool-size: 20

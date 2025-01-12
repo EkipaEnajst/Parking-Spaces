@@ -46,7 +46,11 @@ public class PredlogiZrno {
 
         httpClient = HttpClient.newBuilder().build();
 
-        externaldataURL = env.get("EXTERNALDATAURL");//"http://172.17.0.3:8080/v1/parkirisca/";
+        //externaldataURL = env.get("EXTERNALDATA_URL");//"http://172.17.0.3:8080/v1/parkirisca/";
+        String edHost = env.get("EXTERNALDATA_DEPLOYMENT_SERVICE_SERVICE_HOST");
+        //String edPort = env.get("EXTERNALDATA_DEPLOYMENT_SERVICE_SERVICE_PORT");
+        externaldataURL = String.format("http://%s:%s/v1/parkirisca", edHost, 8080);
+
     }
 
     public List<Predlog> getPredlogi() {
@@ -98,8 +102,21 @@ public class PredlogiZrno {
         }
         else {
             List<Uporabnik> volilci = obstojecPredlog.getVolilci();
-            volilci.addAll(predlog.getVolilci());
-            obstojecPredlog.setStGlasov(obstojecPredlog.getStGlasov() + predlog.getVolilci().size());
+
+            for (Uporabnik novVolilec: predlog.getVolilci()) {
+                if (!volilci.contains(novVolilec)) {
+                    volilci.add(novVolilec);
+                }
+            }
+
+            obstojecPredlog.setVolilci(volilci);
+            obstojecPredlog.setStGlasov(volilci.size());
+
+
+
+//            List<Uporabnik> volilci = obstojecPredlog.getVolilci();
+//            volilci.addAll(predlog.getVolilci());
+//            obstojecPredlog.setStGlasov(obstojecPredlog.getStGlasov() + predlog.getVolilci().size());
         }
 
 
